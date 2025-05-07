@@ -1,0 +1,10 @@
+.table-hover tbody tr:hover {
+    background-color: rgba(40, 167, 69, 0.1);
+}
+.badge {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+.rounded-circle {
+    object-fit: cover;
+}

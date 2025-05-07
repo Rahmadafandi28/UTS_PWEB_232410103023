@@ -1,0 +1,16 @@
+    /* CSS tambahan untuk navbar yang lebih besar */
+    .navbar-custom {
+        min-height: 80px; /* Tinggi navbar diperbesar */
+    }
+    
+    .navbar-nav .nav-link {
+        font-weight: 500; /* Mengganti fw-light menjadi lebih tebal */
+    }
+    
+    .navbar-nav .nav-link.active {
+        font-weight: 600; /* Lebih tebal untuk menu aktif */
+    }
+    
+    .dropdown-menu {
+        min-width: 250px; /* Lebar dropdown diperbesar */
+    }

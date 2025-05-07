@@ -1,0 +1,16 @@
+    /* Custom styling untuk memperbesar elemen */
+.card {
+    transition: transform 0.3s;
+}
+.card:hover {
+    transform: scale(1.02);
+}
+h2.display-5 {
+    font-size: 2.5rem;
+}
+.fs-5 {
+    font-size: 1.25rem !important;
+}
+.bg-light {
+    background-color: #f8f9fa !important;
+}
