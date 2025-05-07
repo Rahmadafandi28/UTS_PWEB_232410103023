@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kontribusi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use ReturnTypeWillChange;
 
 class PageController extends Controller
 {
@@ -71,50 +73,51 @@ class PageController extends Controller
 
     public function pengelolaan()
     { 
-        $dataSampah = [
-            [
-                'kategori' => 'Organik',
-                'contoh' => 'Sisa makanan',
-                'pemilahan' => [
-                    'Pisahkan dari kemasan plastik',
-                    'Keringkan sebelum dibuang'
-                ],
-                'tempat' => 'Komposter Rumah Tangga',
-                'color' => 'success'
-            ],
-            [
-                'kategori' => 'Anorganik',
-                'contoh' => 'kaleng',
-                'pemilahan' => [
-                    'Cuci hingga bersih',
-                    'Keringkan dan geprek'
-                ],
-                'tempat' => 'Bank Sampah Terdekat',
-                'color' => 'primary'
-            ],
-            [
-                'kategori' => 'B3',
-                'contoh' => 'Baterai',
-                'pemilahan' => [
-                    'Jangan dibongkar',
-                    'Simpan dalam wadah kedap'
-                ],
-                'tempat' => 'Dropbox B3 Khusus',
-                'color' => 'danger'
-            ],
-            [
-                'kategori' => 'Organik',
-                'contoh' => 'ranting',
-                'pemilahan' => [
-                    'Campur dengan sekam',
-                    'Hindari daging/belerang'
-                ],
-                'tempat' => 'TPST Organik',
-                'color' => 'success'
-            ]
-        ];
+        // $dataSampah = [
+        //     [
+        //         'kategori' => 'Organik',
+        //         'contoh' => 'Sisa makanan',
+        //         'pemilahan' => [
+        //             'Pisahkan dari kemasan plastik',
+        //             'Keringkan sebelum dibuang'
+        //         ],
+        //         'tempat' => 'Komposter Rumah Tangga',
+        //         'color' => 'success'
+        //     ],
+        //     [
+        //         'kategori' => 'Anorganik',
+        //         'contoh' => 'kaleng',
+        //         'pemilahan' => [
+        //             'Cuci hingga bersih',
+        //             'Keringkan dan geprek'
+        //         ],
+        //         'tempat' => 'Bank Sampah Terdekat',
+        //         'color' => 'primary'
+        //     ],
+        //     [
+        //         'kategori' => 'B3',
+        //         'contoh' => 'Baterai',
+        //         'pemilahan' => [
+        //             'Jangan dibongkar',
+        //             'Simpan dalam wadah kedap'
+        //         ],
+        //         'tempat' => 'Dropbox B3 Khusus',
+        //         'color' => 'danger'
+        //     ],
+        //     [
+        //         'kategori' => 'Organik',
+        //         'contoh' => 'ranting',
+        //         'pemilahan' => [
+        //             'Campur dengan sekam',
+        //             'Hindari daging/belerang'
+        //         ],
+        //         'tempat' => 'TPST Organik',
+        //         'color' => 'success'
+        //     ]
+        // ];
 
-        return view('pengelolaan', compact('dataSampah'));
+        $kontribusi = Kontribusi::get();
+        return view('pengelolaan', compact('kontribusi'));
     }
 
     public function profile()
@@ -132,5 +135,48 @@ class PageController extends Controller
         ];
         
         return view('profile', ['profile' => $profile]);
+    }
+
+    public function tambah_data()
+    {
+        return view('tambah');
+    }
+
+    public function submit(Request $request)
+    {
+        $kontribusi = new Kontribusi();
+        
+        $kontribusi->Kategori = $request->Kategori;
+        $kontribusi->Contoh_Barang = $request->Contoh_Barang;
+        $kontribusi->Cara_Pemilahan = $request->Cara_Pemilahan;
+        $kontribusi->Tempat_Pembuangan = $request->Tempat_Pembuangan;
+        
+        $kontribusi->save();
+        
+        return redirect()->route('pengelolaan')->with('success', 'Data berhasil disimpan!');
+    }
+
+    public function edit ($id)
+    {
+        $kontribusi = Kontribusi ::find($id);
+        return view('edit', compact('kontribusi'));
+    }
+
+    public function update (Request $request, $id) {
+        $kontribusi = kontribusi :: find($id);
+        $kontribusi->Kategori = $request->Kategori;
+        $kontribusi->Contoh_Barang = $request->Contoh_Barang;
+        $kontribusi->Cara_Pemilahan = $request->Cara_Pemilahan;
+        $kontribusi->Tempat_Pembuangan = $request->Tempat_Pembuangan;
+        
+        $kontribusi->update();
+        
+        return redirect()->route('pengelolaan');
+    }
+
+    public function delete($id) {
+        $kontribusi = kontribusi::find($id);
+        $kontribusi->delete();
+        return redirect() -> route('pengelolaan');
     }
 }

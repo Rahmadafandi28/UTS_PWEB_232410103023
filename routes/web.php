@@ -25,3 +25,14 @@ Route::get('/pengelolaan', [PageController::class, 'pengelolaan']) ->name('penge
 
 // Halaman Profile
 Route::get('/profile', [PageController::class, 'profile']) ->name('profile');
+
+Route::get('pengelolaan/tambah', [PageController::class, 'tambah_data']) ->name('tambah');
+Route::post('pengelolaan/submit', [PageController::class, 'submit']) ->name('submit');
+Route::get('pengelolaan/edit/{id}', [PageController::class, 'edit']) ->name('edit');
+Route::post('pengelolaan/update/{id}', [PageController::class, 'update']) ->name('update');
+
+// Route untuk edit
+Route::get('/pengelolaan/{id}/edit', [PageController::class, 'edit'])->name('edit');
+
+// Route untuk delete 
+Route::delete('/pengelolaan/{id}/delete', [PageController::class, 'delete'])->name('delete');
